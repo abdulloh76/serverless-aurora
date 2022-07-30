@@ -15,8 +15,8 @@ func main() {
 		panic("Need POSTGRES_URI environment variable")
 	}
 
-	dynamodb := store.NewPostgresDBStore(postgresDSN)
-	domain := domain.NewUsersDomain(dynamodb)
+	postgreDB := store.NewPostgresDBStore(postgresDSN)
+	domain := domain.NewUsersDomain(postgreDB)
 	handler := handlers.NewAPIGatewayV2Handler(domain)
 	lambda.Start(handler.DeleteHandler)
 }

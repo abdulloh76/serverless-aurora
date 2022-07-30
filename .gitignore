@@ -13,3 +13,13 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+.aws-sam
+.vscode
+bootstrap
+env-vars.json
+samconfig.toml
+bin
+
+config/prod.yml
+.env
