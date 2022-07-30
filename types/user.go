@@ -1,6 +1,6 @@
 package types
 
 type CreateUser struct {
-	Firstname string
-	Lastname  string
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
 }

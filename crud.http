@@ -1,0 +1,28 @@
+@rootUrl = http://localhost:8080
+
+get {{rootUrl}}/user
+
+###
+get {{rootUrl}}/user/id
+
+###
+post {{rootUrl}}/user
+Content-Type: application/json
+
+{
+  "firstname": "John",
+  "lastname": "Wick"
+}
+
+###
+put {{rootUrl}}/user/id
+Content-Type: application/json
+
+{
+  "firstname": "Sherlock",
+  "lastname": "Holmes"
+}
+
+
+###
+delete {{rootUrl}}/user/id

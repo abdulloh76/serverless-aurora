@@ -1,0 +1,40 @@
+getUsers:
+  handler: bin/getUsers
+  events:
+    - http:
+        method: get
+        path: user
+        cors: true
+        private: false
+getUserById:
+  handler: bin/getUserById
+  events:
+    - http:
+        method: get
+        path: user/{id}
+        cors: true
+        private: false
+postUser:
+  handler: bin/postUser
+  events:
+    - http:
+        method: post
+        path: user
+        cors: true
+        private: false
+deleteUser:
+  handler: bin/deleteUser
+  events:
+    - http:
+        method: delete
+        path: user/{id}
+        cors: true
+        private: false
+putUser:
+  handler: bin/putUser
+  events:
+    - http:
+        method: put
+        path: user/{id}
+        cors: true
+        private: false
