@@ -40,7 +40,7 @@ provider:
 package:
   patterns:
     - "!./**"
-    - ./bin/**
+    - ./functions/**
 
 functions:
   - ${file(./sls/functions.yml)}
