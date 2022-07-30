@@ -44,16 +44,18 @@ func (d *PostgresDBStore) All() ([]types.User, error) {
 
 func (d *PostgresDBStore) Get(id string) (*types.User, error) {
 	// todo
+	// ErrUserNotFound
 	return &types.User{}, nil
 }
 
-func (d *PostgresDBStore) Create(user types.CreateUser) error {
+func (d *PostgresDBStore) Create(user types.CreateUser) (*types.User, error) {
 	// marshall, create
-	return nil
+	return nil, nil
 }
 
 func (d *PostgresDBStore) Modify(id string, user types.CreateUser) (*types.User, error) {
 	// todo marshall, update
+	// ErrUserNotFound
 	// if err != nil {
 	// 	return fmt.Errorf("unable to marshal product: %w", err)
 	// }
@@ -66,6 +68,7 @@ func (d *PostgresDBStore) Modify(id string, user types.CreateUser) (*types.User,
 
 func (d *PostgresDBStore) Delete(id string) error {
 	// todo
+	// ErrUserNotFound
 	// if err != nil {
 	// 	return fmt.Errorf("can't delete item: %w", err)
 	// }

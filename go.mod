@@ -3,6 +3,7 @@ module github.com/abdulloh76/serverless-aurora
 go 1.18
 
 require (
+	github.com/aws/aws-lambda-go v1.34.0
 	gorm.io/driver/postgres v1.3.8
 	gorm.io/gorm v1.23.6
 )

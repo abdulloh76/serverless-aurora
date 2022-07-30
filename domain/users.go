@@ -12,17 +12,17 @@ var (
 	ErrJsonUnmarshal = errors.New("failed to parse user from request body")
 )
 
-type UsersDomain struct {
+type Users struct {
 	store types.Store
 }
 
-func NewUsersDomain(s types.Store) *UsersDomain {
-	return &UsersDomain{
+func NewUsersDomain(s types.Store) *Users {
+	return &Users{
 		store: s,
 	}
 }
 
-func (u *UsersDomain) GetUser(id string) (*types.User, error) {
+func (u *Users) GetUser(id string) (*types.User, error) {
 	product, err := u.store.Get(id)
 	if err != nil {
 		return nil, fmt.Errorf("%w", err)
@@ -31,7 +31,7 @@ func (u *UsersDomain) GetUser(id string) (*types.User, error) {
 	return product, nil
 }
 
-func (u *UsersDomain) AllUsers() ([]types.User, error) {
+func (u *Users) AllUsers() ([]types.User, error) {
 	allUsers, err := u.store.All()
 	if err != nil {
 		return allUsers, fmt.Errorf("%w", err)
@@ -40,21 +40,21 @@ func (u *UsersDomain) AllUsers() ([]types.User, error) {
 	return allUsers, nil
 }
 
-func (u *UsersDomain) Create(body []byte) error {
+func (u *Users) Create(body []byte) (*types.User, error) {
 	user := types.CreateUser{}
 	if err := json.Unmarshal(body, &user); err != nil {
-		return fmt.Errorf("%w", ErrJsonUnmarshal)
+		return nil, fmt.Errorf("%w", ErrJsonUnmarshal)
 	}
 
-	err := u.store.Create(user)
+	newUser, err := u.store.Create(user)
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return nil, fmt.Errorf("%w", err)
 	}
 
-	return nil
+	return newUser, nil
 }
 
-func (u *UsersDomain) ModifyUser(id string, body []byte) (*types.User, error) {
+func (u *Users) ModifyUser(id string, body []byte) (*types.User, error) {
 	user := types.CreateUser{}
 	if err := json.Unmarshal(body, &user); err != nil {
 		return nil, fmt.Errorf("%w", ErrJsonUnmarshal)
@@ -68,7 +68,7 @@ func (u *UsersDomain) ModifyUser(id string, body []byte) (*types.User, error) {
 	return updatedUser, nil
 }
 
-func (u *UsersDomain) DeleteUser(id string) error {
+func (u *Users) DeleteUser(id string) error {
 	err := u.store.Delete(id)
 	if err != nil {
 		return fmt.Errorf("%w", err)
