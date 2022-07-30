@@ -1,5 +1,5 @@
 getUsers:
-  handler: bin/getUsers
+  handler: functions/getUsers/bootstrap
   events:
     - http:
         method: get
@@ -7,7 +7,7 @@ getUsers:
         cors: true
         private: false
 getUserById:
-  handler: bin/getUserById
+  handler: functions/getUserById/bootstrap
   events:
     - http:
         method: get
@@ -15,7 +15,7 @@ getUserById:
         cors: true
         private: false
 postUser:
-  handler: bin/postUser
+  handler: functions/postUser/bootstrap
   events:
     - http:
         method: post
@@ -23,7 +23,7 @@ postUser:
         cors: true
         private: false
 deleteUser:
-  handler: bin/deleteUser
+  handler: functions/deleteUser/bootstrap
   events:
     - http:
         method: delete
@@ -31,7 +31,7 @@ deleteUser:
         cors: true
         private: false
 putUser:
-  handler: bin/putUser
+  handler: functions/putUser/bootstrap
   events:
     - http:
         method: put
