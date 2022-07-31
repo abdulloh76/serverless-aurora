@@ -2,6 +2,7 @@ package store
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/abdulloh76/serverless-aurora/types"
 	"gorm.io/driver/postgres"
@@ -25,56 +26,67 @@ func NewPostgresDBStore(dsn string) *PostgresDBStore {
 		panic(err)
 	}
 
+	db.AutoMigrate(&types.User{})
+
 	return &PostgresDBStore{
 		db,
 	}
 }
 
 func (d *PostgresDBStore) All() ([]types.User, error) {
-	// todo
-	// 	if err != nil {
-	// 		return productRange, fmt.Errorf("failed to get items from db: %w", err)
-	// 	}
-	// if err != nil {
-	// 		return productRange, fmt.Errorf("failed to unmarshal data from db: %w", err)
-	// 	}
+	var users []types.User
+	err := d.db.Model(&types.User{}).Find(&users).Error
 
-	return []types.User{}, nil
+	return users, err
 }
 
 func (d *PostgresDBStore) Get(id string) (*types.User, error) {
-	// todo
-	// ErrUserNotFound
-	return &types.User{}, nil
+	var user types.User
+	err := d.db.First(&user, "id = ?", id).Error
+
+	if user == (types.User{}) {
+		return nil, fmt.Errorf("%w", ErrUserNotFound)
+	}
+
+	return &user, err
 }
 
-func (d *PostgresDBStore) Create(user types.CreateUser) (*types.User, error) {
-	// marshall, create
-	return nil, nil
+func (d *PostgresDBStore) Create(user *types.User) error {
+	err := d.db.Create(&user).Error
+
+	return err
 }
 
-func (d *PostgresDBStore) Modify(id string, user types.CreateUser) (*types.User, error) {
-	// todo marshall, update
-	// ErrUserNotFound
-	// if err != nil {
-	// 	return fmt.Errorf("unable to marshal product: %w", err)
-	// }
-	// if err != nil {
-	// 	return fmt.Errorf("cannot put item: %w", err)
-	// }
+func (d *PostgresDBStore) Modify(id string, userDto types.CreateUser) (*types.User, error) {
+	var user types.User
+	err := d.db.First(&user, "id = ?", id).Error
 
-	return nil, nil
+	if user == (types.User{}) {
+		return nil, fmt.Errorf("%w", ErrUserNotFound)
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	user.Firstname = userDto.Firstname
+	user.Lastname = userDto.Lastname
+	err = d.db.Save(&user).Error
+
+	return &user, err
 }
 
 func (d *PostgresDBStore) Delete(id string) error {
-	// todo
-	// ErrUserNotFound
-	// if err != nil {
-	// 	return fmt.Errorf("can't delete item: %w", err)
-	// }
+	var user types.User
+	err := d.db.First(&user, "id = ?", id).Error
 
-	return nil
+	if user == (types.User{}) {
+		return fmt.Errorf("%w", ErrUserNotFound)
+	}
+	if err != nil {
+		return err
+	}
+
+	err = d.db.Delete(&user).Error
+
+	return err
 }
-
-// The project is a test project to explore using Go for Lambdas and hopefully find a developer
-// to convert over 100 Lambdas written in Javascript and TypeScript and rewrite them in GO.

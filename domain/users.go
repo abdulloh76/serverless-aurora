@@ -46,12 +46,17 @@ func (u *Users) Create(body []byte) (*types.User, error) {
 		return nil, fmt.Errorf("%w", ErrJsonUnmarshal)
 	}
 
-	newUser, err := u.store.Create(user)
+	newUser := types.User{
+		Firstname: user.Firstname,
+		Lastname:  user.Lastname,
+	}
+
+	err := u.store.Create(&newUser)
 	if err != nil {
 		return nil, fmt.Errorf("%w", err)
 	}
 
-	return newUser, nil
+	return &newUser, nil
 }
 
 func (u *Users) ModifyUser(id string, body []byte) (*types.User, error) {
