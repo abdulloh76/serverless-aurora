@@ -2,7 +2,8 @@
 
 STACK_NAME ?= serverless-aurora
 FUNCTIONS := getUsers getUserById postUser deleteUser putUser
-POSTGRES_URI := POSTGRES_URI
+READ_POSTGRES_URI=READ_POSTGRES_URI
+WRITE_POSTGRES_URI=WRITE_POSTGRES_URI
 
 # To try different version of Go
 GO := go
@@ -25,16 +26,16 @@ deploy:
 
 
 invoke-get-all:
-	serverless invoke local --function getUsers --path functions/getUsers/event.json -e POSTGRES_URI=${POSTGRES_URI}
+	serverless invoke local --function getUsers --path functions/getUsers/event.json -e POSTGRES_URI=${READ_POSTGRES_URI}
 
 invoke-get:
-	serverless invoke local --function getUserById --path functions/getUserById/event.json -e POSTGRES_URI=${POSTGRES_URI}
+	serverless invoke local --function getUserById --path functions/getUserById/event.json -e POSTGRES_URI=${READ_POSTGRES_URI}
 
 invoke-create:
-	serverless invoke local --function postUser --path functions/postUser/event.json -e POSTGRES_URI=${POSTGRES_URI}
+	serverless invoke local --function postUser --path functions/postUser/event.json -e POSTGRES_URI=${WRITE_POSTGRES_URI}
 
 invoke-put:
-	serverless invoke local --function putUser --path functions/putUser/event.json -e POSTGRES_URI=${POSTGRES_URI}
+	serverless invoke local --function putUser --path functions/putUser/event.json -e POSTGRES_URI=${WRITE_POSTGRES_URI}
 
 invoke-delete:
-	serverless invoke local --function deleteUser --path functions/deleteUser/event.json -e POSTGRES_URI=${POSTGRES_URI}
+	serverless invoke local --function deleteUser --path functions/deleteUser/event.json -e POSTGRES_URI=${WRITE_POSTGRES_URI}

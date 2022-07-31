@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/aws/aws-lambda-go v1.34.0
+	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
 	gorm.io/driver/postgres v1.3.8
 	gorm.io/gorm v1.23.8
 )

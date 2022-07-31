@@ -1,6 +1,9 @@
 package types
 
 import (
+	"errors"
+
+	"github.com/teris-io/shortid"
 	"gorm.io/gorm"
 )
 
@@ -11,11 +14,11 @@ type User struct {
 	Lastname  string `gorm:"varchar(100)"`
 }
 
-// func (invoice *User) BeforeCreate(tx *gorm.DB) (err error) {
-// 	invoice.ID, err = shortid.Generate()
+func (invoice *User) BeforeCreate(tx *gorm.DB) (err error) {
+	invoice.ID, err = shortid.Generate()
 
-// 	if err != nil {
-// 		return errors.New("can't save invalid data")
-// 	}
-// 	return nil
-// }
+	if err != nil {
+		return errors.New("can't save invalid data")
+	}
+	return nil
+}
