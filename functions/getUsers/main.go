@@ -17,6 +17,6 @@ func main() {
 
 	postgreDB := store.NewPostgresDBStore(postgresDSN)
 	domain := domain.NewUsersDomain(postgreDB)
-	handler := handlers.NewAPIGatewayV2Handler(domain)
+	handler := handlers.NewAPIGatewayHandler(domain)
 	lambda.Start(handler.AllHandler)
 }
